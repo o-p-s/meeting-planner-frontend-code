@@ -1,0 +1,51 @@
+::ng-deep #calendar, #headline .btn{
+  font-size:0.83em!important;
+}
+::ng-deep mwl-calendar-month-cell{
+min-height: 10vh;
+font-size: 0.7em;
+}
+::ng-deep .cal-month-view .cal-day-number, ::ng-deep .cal-day-badge{
+  margin:5px 5px!important; 
+  padding:0 0.5vw !important;
+  border-radius: 50%;
+  font-size:1.2em!important;
+  line-height: 1.5!important; 
+}
+::ng-deep input , input[type=date], input[type=datetime-local], input[type=month], input[type=time],input[type="color" i], textarea, span  {
+  justify-self: flex-start;
+  outline:none;
+  border-right: 0;
+  border-left:0;
+  border-top:0;
+  border-bottom: 1px solid #f4f4f4;
+  appearance: none;
+  overflow: hidden;
+  min-height: 20px;
+  resize: none;
+  transition: all 0.5s;
+  background-color: none!important;
+  -webkit-appearance: none;
+}
+input::-webkit-inner-spin-button, input::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+.form-element{
+  display: inline-flex;
+  flex-flow: row;
+  width: 100%;
+  margin:10px 0;
+}
+.form-element strong{
+  text-align: end;
+}
+.modal-footer button{
+  font-size: 0.7em;
+}
+.ng-valid[required], .ng-valid.required  {
+  border-bottom: 1px solid #42A948; /* green */
+}
+.ng-invalid:not(form)  {
+  border-bottom: 1px solid #a94442; /* redleft*/
+}

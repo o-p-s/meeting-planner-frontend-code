@@ -1,0 +1,121 @@
+<!--Template  for User Meeting Form-->
+<ng-template #modalContent let-close="close" >
+    <div class="modal-header">
+      <h6 class="modal-title w-100 d-flex justify-content-center" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{modalData?.event.title }}</h6>
+      <button type="button" class="close" (click)="close()"> <span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body text-center d-flex justify-content-center" >
+      <form class="d-flex col-lg-6 pr-0 pl-0" style="flex-direction:column;font-size: 0.7em">
+        
+        <div class="row form-element "><strong class="col-md-6">Title : </strong>
+          <span *ngIf="!appService.isAdmin;else et" class="col-md-6 text-muted">{{modalData?.event.title}}</span>
+          <ng-template #et><input required class="col-md-6" type="text" [(ngModel)]="modalData?.event.title" 
+          name="title" #title="ngModel" maxlength="26"  required></ng-template>
+        </div>
+
+        <div class="row form-element"><strong class="col-md-6">Start Time : </strong>
+          <span *ngIf="!appService.isAdmin;else es" class="col-md-6 text-muted">{{modalData?.event.start | time}}</span>
+          <ng-template #es><input  class="col-md-6" type="text" mwlFlatpickr [(ngModel)]="modalData?.event.start" 
+          [altInput]="true" [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-dTH:i" 
+          altFormat="F j, Y H:i" placeholder="Not set" name="start" #start="ngModel"></ng-template>
+        </div>
+        
+        <div class="row form-element"><strong class="col-md-6">End Time : </strong>
+          <span *ngIf="!appService.isAdmin;else ee" class="col-md-6 text-muted">{{modalData?.event.end | time}}</span>
+          <ng-template #ee><input class="col-md-6" type="text" mwlFlatpickr [(ngModel)]="modalData?.event.end"
+          [altInput]="true" [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-dTH:i"
+          altFormat="F j, Y H:i" placeholder="Not set" name="end" #end="ngModel"></ng-template>
+        </div>
+        <div class="row form-element"><strong class="col-md-6">Location : </strong>
+          <span *ngIf="!appService.isAdmin;else el" class="col-md-6 text-muted">{{modalData?.event.location}}</span>
+          <ng-template #el><textarea class="col-md-6" type="text" maxlength="60" name="location" #location="ngModel" #location
+          [(ngModel)]="modalData?.event.location" row="2"></textarea></ng-template>
+        </div>
+        
+        <div class="row form-element"><strong class="col-md-6">Purpose  : </strong>
+          <span *ngIf="!appService.isAdmin;else ep" class="col-md-6 text-muted">{{modalData?.event.purpose}}</span>
+          <ng-template #ep><textarea  class="col-md-6" maxlength="300" type="text" name="purpose" #purpose="ngModel" #purpose 
+           [(ngModel)]="modalData?.event.purpose" (keydown)="resize(purpose)" (focus)="resize(purpose)" autofocus></textarea></ng-template>
+        </div>
+
+        <div class="row form-element"><strong class="col-md-6">Created By  : </strong>
+          <span class="col-md-6 text-muted">{{modalData?.event.createdBy}}</span>
+        </div>
+        
+        <div *ngIf="appService.isAdmin" class="row form-element"><strong class="col-md-6">Primary Color : </strong>
+          <input class="col-md-6" type="color" name="pColor" #pColor="ngModel" [(ngModel)]="modalData?.event.color.primary">
+        </div>    
+        
+        <div *ngIf="appService.isAdmin" class="row form-element"><strong class="col-md-6">Secondary Color : </strong>
+          <input class="col-md-6" type="color" name="sColor" #sColor="ngModel" [(ngModel)]="modalData?.event.color.secondary">
+        </div> 
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button *ngIf="appService.isAdmin" class="btn btn-outline-success" (click)="saveEvent()">Save</button>
+      <button *ngIf="appService.isAdmin" class="btn btn-outline-danger" (click)="deleteEvent()">Delete</button>
+      <button class="btn btn-outline-secondary" (click)="close()">Close</button>
+    </div>
+  </ng-template>
+
+  <!--Template for Meeting Alert-->
+  <ng-template #alert let-close="close" >
+      <div class="modal-header">
+        <h6 class="modal-title w-100 d-flex justify-content-center" #at >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{alertData?.title}}</h6>
+        <button type="button" class="close" (click)="close()"> <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body text-center">A meeting scheduled for {{alertData?.purpose}} is about to begin in less than one minute.</div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-warning" (click)="snooze(at)">Snooze</button>
+        <button class="btn btn-outline-danger" (click)="close()">Dismiss</button>
+      </div>      
+  </ng-template>
+
+  <!--Meetings calendar-->
+  <div  id="headline" class="row text-center mt-3 mr-0 ml-0">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <button class="btn btn-primary mr-2" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false" (click)="verifyDate()" [disabled]="prevBtn">
+          <span class="d-flex carousel-control-prev-icon border-0" style="height:15px"></span>
+        </button>
+        <div class="btn btn-outline-secondary mr-2" mwlCalendarToday [(viewDate)]="viewDate">
+          Today
+        </div>
+        <button class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false" (click)="verifyDate()" [disabled]="nextBtn">
+          <span class="d-flex carousel-control-next-icon border-0" style="height:15px"></span>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h5 class="mt-2"><strong>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</strong></h5>
+      <button *ngIf="appService.isAdmin" class="btn btn-success pull-right mt-2 mb-2" (click)="addEvent()"> Add Meeting </button>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">
+          Month
+        </div>
+        <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">
+          Day
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div id="calendar" class="container" [ngSwitch]="view">
+    <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+      [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-month-view>
+
+    <mwl-calendar-day-view
+      *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+      (eventClicked)="handleEvent( $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-day-view>
+  </div>
+  
+  <br><br>
