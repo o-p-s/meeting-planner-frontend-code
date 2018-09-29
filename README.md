@@ -1,24 +1,24 @@
 # MeetingPlanner
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This project establishes a meeting planner for the users registered with this app by any admin. It notifies users via email and in realtime when a meeting is about to start. An admin has full control over the scheduled meetings for any user, but user has read-only permissions. 
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## LINKS
+  1.)APP URL : http://meeting-planner.opsaini.com \
+  2.)API URL : http://api.meeting-planner.opsaini.com \
+	3.)Documentation REST Endpoints : http://documentations.opsaini.com/mp-restapi <br/> 
+	4.)Documentation Socket Endpoints : http://documentations.opsaini.com/mp-socketio \
+	5.)Github (Backend) URL : https://github.com/o-p-s/Meeting-Planner-Backend \
+	6.)Github (Frontend) URL : https://github.com/o-p-s/meeting-planner-frontend-code 
 
 ## Description
 The project has been built using 
 		Frontend Technologies - HTML5, CSS3, JS, Bootstrap and Angular
 		Backend Technologies - NodeJS, ExpressJS and Socket.IO
-		Databases - MongoDB and Redis
+		Databases - MongoDB and Redis.
 
 ## Features
 1) User management System-
@@ -107,15 +107,3 @@ The project has been built using
 		a) APIs have pagination or rate limiting to avoid send huge chunks of messages as API response.(Incase of fetching all users 
       each request fetches 5 users at a time, while in case of fetching meetings no limit is there since, beacuse to display 
       snooze for all in valid-time meetings, all meetings for the current user are required).
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
